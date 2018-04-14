@@ -21,7 +21,7 @@ $ python main.py -h
 An experiment with the randomly generated examples and the MLPConv model could look like below. 
 
 ```
-$ python main.py --output . --incidences example/INCIDENCES.txt --specifications /home/stefanhgm/Sciebo/SEER-Dataset/SEER_1973_2014_TEXTDATA/incidence/read.seer.research.nov16.sas --cases example/CASES.csv --task survival60 --oneHotEncoding --model MLPConv --mlpLayers 2 --mlpWidth 20 --mlpEpochs 1 --mlpDropout 0.1 --mlpConvNeurons 3 --test --importance --plotData --plotResults
+$ python main.py --incidences example/INCIDENCES.txt --specifications example/read.seer.research.nov2016.sas --cases example/CASES.csv --task survival60 --oneHotEncoding --model MLPConv --mlpLayers 2 --mlpWidth 20 --mlpEpochs 1 --mlpDropout 0.1 --mlpConvNeurons 3 --test --importance --plotData --plotResults
 [...]
 Read ASCII data files.
 Raw data: (10000; 133) cases and attributes

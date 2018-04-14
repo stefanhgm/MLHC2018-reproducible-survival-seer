@@ -101,12 +101,12 @@ class Datarama:
 
     def validate(self):
         """ Validation evaluation wrapper. """
-        print('Validation results:', end='')
+        print('Validation results: ', end='')
         return self.evaluate(self.valid_x, self.valid_y)
 
     def test(self):
         """ Testing evaluation wrapper. """
-        print('Test results:', end='')
+        print('Test results: ', end='')
         return self.evaluate(self.test_x, self.test_y)
 
     def evaluate(self, eval_x, eval_y):
@@ -129,7 +129,6 @@ class Datarama:
             measurements.append('rmse = ' + str(np.sqrt(mean_squared_error(eval_y, scores_y))))
             measurements.append('srmse = ' + str(np.sqrt(mean_squared_error(scaled_eval_y, scaled_scores_y))))
             measurements.append('smae = ' + str(mean_absolute_error(scaled_eval_y, scaled_scores_y)))
-            measurements.append('set = ' + str(self.set_split_hash))
 
             if self.plot_results:
                 fig = plt.figure(dpi=200)
@@ -143,10 +142,9 @@ class Datarama:
             else:
                 predict_y = scores_y.round()
 
-            measurements.append('acc = ' + str(accuracy_score(eval_y, predict_y)))
-            measurements.append('f1 = ' + str(f1_score(eval_y, predict_y)))
             measurements.append('auc = ' + str(roc_auc_score(eval_y, scores_y)))
-            measurements.append('set = ' + str(self.set_split_hash))
+            measurements.append('f1 = ' + str(f1_score(eval_y, predict_y)))
+            measurements.append('acc = ' + str(accuracy_score(eval_y, predict_y)))
 
             if self.plot_results:
                 fig = plt.figure(dpi=200)

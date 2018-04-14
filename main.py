@@ -10,7 +10,7 @@ from lib import pipelines
 from lib.data import Data
 from lib.model import Model
 from lib.options import parseargs
-from lib.datarama import Datarama
+from lib.experiment import Experiment
 
 
 def main():
@@ -72,13 +72,13 @@ def main():
 
     ################
     # Carry out task
-    datarama = Datarama(model=model, data=data, task=args.task, valid_ratio=0.1, test_ratio=0.1,
-                        model_type=args.model, encodings=encodings, encode_categorical_inputs=args.oneHotEncoding,
-                        plot_results=args.plotResults, output_directory=output_directory)
+    experiment = Experiment(model=model, data=data, task=args.task, valid_ratio=0.1, test_ratio=0.1,
+                          model_type=args.model, encodings=encodings, encode_categorical_inputs=args.oneHotEncoding,
+                          plot_results=args.plotResults, output_directory=output_directory)
 
-    datarama.train(mlp_epochs=args.mlpEpochs)
+    experiment.train(mlp_epochs=args.mlpEpochs)
 
-    results_validate = datarama.validate()
+    results_validate = experiment.validate()
     # Write validation results to file
     with open(output_directory + 'results_validate.txt', 'a') as results_file:
         for res in results_validate:
@@ -86,7 +86,7 @@ def main():
 
     # Only test final model, do not use for tuning
     if args.test:
-        results_test = datarama.test()
+        results_test = experiment.test()
         # Write validation results to file
         with open(output_directory + 'results_test.txt', 'a') as results_file:
             for res in results_test:
@@ -95,7 +95,7 @@ def main():
     ###################
     # Input importance
     if args.importance:
-        importance = datarama.importance(encodings=encodings)
+        importance = experiment.importance(encodings=encodings)
         # Write importance results to file
         with open(output_directory + 'results_importance.txt', 'a') as results_file:
             for (column, rel) in importance:
@@ -105,8 +105,8 @@ def main():
 def create_output_folder(output):
     """ Create a unique output folder. """
     now = datetime.datetime.now()
-    run_folder_name = ('{0}-{1}-{2}_{3}-{4}-{5}_datarama'.format(str(now.year), str(now.month), str(now.day),
-                                                                 str(now.hour), str(now.minute), str(now.second)))
+    run_folder_name = ('{0}-{1}-{2}_{3}-{4}-{5}_experiment'.format(str(now.year), str(now.month), str(now.day),
+                                                                   str(now.hour), str(now.minute), str(now.second)))
     output_directory = output + ('' if output[-1] == '/' else '/') + run_folder_name
 
     i = 0

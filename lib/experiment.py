@@ -10,7 +10,7 @@ mpl.use('Agg')
 import matplotlib.pyplot as plt
 
 
-class Datarama:
+class Experiment:
     """ Class for main functionality. """
 
     def __init__(self, data, model, task, valid_ratio, test_ratio, model_type, encodings, encode_categorical_inputs,

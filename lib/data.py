@@ -26,7 +26,7 @@ class Data:
 
     def state(self, message=''):
         """ Print the number of cases and features contained in the data along with a message. """
-        logging.info(('%s: cases: %d, features: %d' % (message, self.frame.shape[0], self.frame.shape[1])))
+        logging.info(('%s: (%d; %d) cases and attributes' % (message, self.frame.shape[0], self.frame.shape[1])))
 
     def filter_cases(self, cases_file):
         """ Filter cases according to SEER*Stat matrix export and fields Patient ID, Record number."""

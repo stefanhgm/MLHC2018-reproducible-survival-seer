@@ -42,22 +42,23 @@ def main():
 
     ##############
     # Prepare data
+    print('')
     data = Data(incidences_file=args.incidences, specifications_file=args.specifications, plot_data=args.plotData,
                 output_directory=output_directory)
     data.state(message='Raw data')
 
     data.filter_cases(cases_file=args.cases)
-    data.state(message='Filtered SEER*Stat cases')
+    data.state(message='Filtered SEER*Stat cases from ASCII')
 
     # Determine inputs, filter, and pre process them
     data.apply_data_pipeline(pipelines.data_pipeline_full, args.oneHotEncoding)
-    data.state(message='Applied data pipeline')
+    data.state(message='Remove irrelevant, combined, post-diagnosis, and treatment attributes')
 
     data.create_target(args.task)
-    data.state(message='Created target for task ' + args.task)
+    data.state(message='Create target label indicating cancer survival for ' + args.task)
 
     encodings = data.finalize()
-    data.state(message='Removed constant features and finalized data')
+    data.state(message='Remove inputs with constant values')
 
     ###############
     # Prepare model

@@ -40,7 +40,7 @@ def parse_incidences(seer_specification_path, seer_incidences_path):
     assert (sum(delimiter) == 362 - (1 + 3 + 2 + 1 + 3 + 2 + 13 + 5 + 6 + 1 + 2 + 4 + 5 + 5))
 
     # Read in at once
-    logging.info("Read raw data set")
+    logging.info("Read ASCII data files.")
     # The main line for loading the data, using pandas
     # .appl() is used to convert all entries to floats and replace strings with NaN
     # .fillna(-1) is used to replace all NaNs with -1 and .as_matrix() to convert everything to a matrix

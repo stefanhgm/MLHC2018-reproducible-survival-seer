@@ -63,7 +63,7 @@ data in;
     @ 163 NUMNODES             $char2.  /* Number of lymph nodes */                   
     @ 166 NO_SURG              $char1.  /* Reason no cancer-directed surgery */       
     @ 170 SS_SURG              $char2.  /* Site specific surgery (1983-1997) */       
-    @ 174 SURGSCOP             $char1.  /* Scope of lymph node surgery 98-02*/        
+    @ 174 SURGSCOP             $char1.  /* Scope of lymph node surgery 98-02 */        
     @ 175 SURGSITE             $char1.  /* Surgery to other sites */                  
     @ 176 REC_NO               $char2.  /* Record number */                           
     @ 191 TYPE_FU              $char1.  /* Type of followup expected */               
@@ -72,7 +72,7 @@ data in;
     @ 204 ICDOTO9V             $char4.  /* Recode ICD-O-2 to 9 */                     
     @ 208 ICDOT10V             $char4.  /* Recode ICD-O-2 to 10 */                    
     @ 218 ICCC3WHO             $char3.  /* ICCC site recode ICD-O-3/WHO 2008 */       
-    @ 221 ICCC3XWHO            $char3.  /* ICCC site rec extended ICD-O-3/ WHO 2008*/ 
+    @ 221 ICCC3XWHO            $char3.  /* ICCC site rec extended ICD-O-3/ WHO 2008 */ 
     @ 224 BEHTREND             $char1.  /* Behavior recode for analysis */            
     @ 226 HISTREC              $char2.  /* Broad Histology recode */                  
     @ 228 HISTRECB             $char2.  /* Brain recode */                            

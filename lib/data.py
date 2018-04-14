@@ -11,7 +11,7 @@ from collections import OrderedDict
 
 
 class Data:
-    """ Class that contains the data set and all related functions. """
+    """ Class that encapsulates the data set and related functions. """
 
     def __init__(self, incidences_file, specifications_file, plot_data, output_directory):
         # Pandas frame for the data

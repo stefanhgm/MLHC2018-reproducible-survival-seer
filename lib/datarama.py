@@ -11,7 +11,7 @@ import matplotlib.pyplot as plt
 
 
 class Datarama:
-    """Class for main project functionality"""
+    """ Class for main functionality. """
 
     def __init__(self, data, model, task, valid_ratio, test_ratio, model_type, encodings, encode_categorical_inputs,
                  plot_results, output_directory):

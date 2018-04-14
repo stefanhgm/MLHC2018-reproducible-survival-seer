@@ -9,7 +9,7 @@ from sklearn.svm import SVC, SVR
 
 
 class Model:
-    """ Class that contains the data set and all related functions. """
+    """ Class that encapsulates the machine learning model and related functions. """
 
     def __init__(self, model_type, task, input_dim, encodings, mlp_layers, mlp_width, mlp_dropout, mlp_conv_neurons,
                  svm_gamma, svm_c, logr_c):

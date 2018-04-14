@@ -2,7 +2,7 @@ import argparse
 
 
 def parseargs():
-    """A method to parse all necessary command line arguments."""
+    """ A method to parse all necessary command line arguments. """
     parser = argparse.ArgumentParser()
 
     # Output

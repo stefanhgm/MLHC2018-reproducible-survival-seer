@@ -2,6 +2,8 @@ import logging
 import numpy as np
 import pandas as pd
 
+""" Methods to read SEER ASCII files. """
+
 
 def parse_specification(seer_specification_path):
     """Parse specification file into list"""

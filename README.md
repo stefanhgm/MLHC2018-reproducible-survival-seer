@@ -18,7 +18,7 @@ The option -h gives an overview of all command line arguments. Note that this co
 ```
 $ python main.py -h
 ```
-An experiment with the randomly generated examples and the MLPConv model could look like below. 
+An experiment with the randomly generated examples and the MLPConv model can be performed as shown below. This will produce a folder in the current directory containing results and plots for the input data and AUC.
 
 ```
 $ python main.py --incidences example/INCIDENCES.txt --specifications example/read.seer.research.nov2016.sas --cases example/CASES.csv --task survival60 --oneHotEncoding --model MLPConv --mlpLayers 2 --mlpWidth 20 --mlpEpochs 1 --mlpDropout 0.1 --mlpConvNeurons 3 --test --importance --plotData --plotResults

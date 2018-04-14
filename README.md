@@ -1,4 +1,4 @@
-# Machine Learning for Healthcare 2018 - Reproducible Survival Prediction with SEER Cancer Data
+# MLHC 2018 - Reproducible Survival Prediction with SEER Cancer Data
 This repository contains the code that was used for experiments reported in _Reproducible Survival Prediction with SEER Cancer Data_ submitted to the Machine Learning for Healthcare 2018 conference.
 
 Repository overview:

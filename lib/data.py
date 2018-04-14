@@ -190,16 +190,19 @@ class Data:
 
         # Remove cases that died within n month of other cause
         early_other_death_mask =\
-            (self.frame['Survival months'] <= n) & (self.frame['SEER cause of death classification'] != 1)
+            (self.frame['Survival months'] < n) & (self.frame['SEER cause of death classification'] != 1)
         early_other_death_columns = np.arange(self.frame['Survival months'].size)[early_other_death_mask]
         self.frame = self.frame.drop(early_other_death_columns)
+
         # Refresh indices starting from zero
         self.frame = self.frame.set_index(np.arange(self.frame['Survival months'].size))
 
         # Assigns 0/1 labels to the new column
         def survived_cancer_for_n_months(row):
-            if row['Survival months'] <= n and row['SEER cause of death classification'] == 1:
+            # Died within n months of cancer
+            if row['Survival months'] < n and row['SEER cause of death classification'] == 1:
                 return 0
+            # Survived at least n months
             return 1
 
         # Create new target column

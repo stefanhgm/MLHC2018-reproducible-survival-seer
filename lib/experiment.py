@@ -54,8 +54,8 @@ class Experiment:
                                shuffle=True, random_state=63)
 
         # Unique hash for set splits to ensure that same sets are used throughout experiments
-        self.set_split_hash = hash(np.sum(self.train_x)) + hash(np.sum(self.train_y)) + hash(np.sum(self.valid_x))\
-            + hash(np.sum(self.valid_y)) + hash(np.sum(self.test_x)) + hash(np.sum(self.test_y))
+        self.set_split_hash = hash(np.sum(self.train_x)) + hash(np.sum(self.train_y)) + hash(np.sum(self.valid_x)) \
+                              + hash(np.sum(self.valid_y)) + hash(np.sum(self.test_x)) + hash(np.sum(self.test_y))
 
         # Normalize data
         if encode_categorical_inputs:

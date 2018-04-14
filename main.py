@@ -73,8 +73,8 @@ def main():
     ################
     # Carry out task
     experiment = Experiment(model=model, data=data, task=args.task, valid_ratio=0.1, test_ratio=0.1,
-                          model_type=args.model, encodings=encodings, encode_categorical_inputs=args.oneHotEncoding,
-                          plot_results=args.plotResults, output_directory=output_directory)
+                            model_type=args.model, encodings=encodings, encode_categorical_inputs=args.oneHotEncoding,
+                            plot_results=args.plotResults, output_directory=output_directory)
 
     experiment.train(mlp_epochs=args.mlpEpochs)
 

@@ -77,8 +77,8 @@ class Experiment:
         logging.info("Valid: x:{0}, y:{1}".format(str(self.valid_x.shape), str(self.valid_y.shape)))
         logging.info("Test:  x:{0}, y:{1}".format(str(self.test_x.shape), str(self.test_y.shape)))
 
-        # Split up the data into distinct inputs for each convolution
-        if model_type == 'MLPConv':
+        # Split up the data into distinct inputs for each embedding
+        if model_type == 'MLPEmb':
             print("")
             logging.info("Embed input data.")
             encoding_splits = np.cumsum(list(encodings.values()))
@@ -93,7 +93,7 @@ class Experiment:
         """ Training procedure. """
         mlp_batch_size = 20
 
-        if self.model_type in ['MLP', 'MLPConv']:
+        if self.model_type in ['MLP', 'MLPEmb']:
             self.model.model.fit(self.train_x, self.train_y, epochs=mlp_epochs, batch_size=mlp_batch_size, verbose=2,
                                  validation_data=(self.valid_x, self.valid_y))
         elif self.model_type in ['LogR', 'LinR', 'SVM', 'NAIVE']:
@@ -170,7 +170,7 @@ class Experiment:
                 importance.append(coefficient_sum)
             importance = np.array(importance)
 
-        if self.model_type in ['MLP', 'MLPConv'] and self.task in ['survival12', 'survival60']:
+        if self.model_type in ['MLP', 'MLPEmb'] and self.task in ['survival12', 'survival60']:
             # Ablate attributes and measure effect on output
             scores_y = self.model.model.predict(self.test_x)
             i = 0
@@ -179,7 +179,7 @@ class Experiment:
                 if self.model_type == 'MLP':
                     ablated_test_x[:, i:(i + encoding_size)] = 0
                     i += encoding_size
-                elif self.model_type == 'MLPConv':
+                elif self.model_type == 'MLPEmb':
                     ablated_test_x[i][:, :] = 0
                     i += 1
                 ablated_scores_y = self.model.model.predict(ablated_test_x)

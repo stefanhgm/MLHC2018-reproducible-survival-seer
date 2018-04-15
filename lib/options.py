@@ -34,8 +34,8 @@ def parseargs():
     parser.add_argument('-imp', '--importance', required=False, default=False, action='store_true',
                         help='Analyse the importance of inputs. So far only for LinR/LogR and MLP* models.')
 
-    parser.add_argument('-mod', '--model', required=True, choices=['LogR', 'LinR', 'SVM', 'MLP', 'MLPConv', 'NAIVE'],
-                        help='Model for recognition. MLPConv is MLP with convolution of encoded features.')
+    parser.add_argument('-mod', '--model', required=True, choices=['LogR', 'LinR', 'SVM', 'MLP', 'MLPEmb', 'NAIVE'],
+                        help='Model for recognition. MLPEmb is MLP with embedding of encoded features.')
 
     # Model specific options
 
@@ -49,19 +49,20 @@ def parseargs():
     parser.add_argument('-svmC', '--svmC', required=False, type=float, default=1.0,
                         help='Penalty parameter C of the error term for SVM.')
 
-    # MLP/MLPConv
+    # MLP/MLPEmb
     parser.add_argument('-lay', '--mlpLayers', required=False, type=int, default=1,
-                        help='Number of layers for MLP*. For MLPConv first convolution counts as layer.')
+                        help='Number of layers for MLP*. For MLPEmb embedding counts as first layer.')
     parser.add_argument('-wid', '--mlpWidth', required=False, type=int, default=20,
-                        help='Number of nodes/layer for MLP*. For MLPConv first layer width depends on convolution.')
+                        help='Number of nodes/layer for MLP*. For MLPEmb, first layer width depends on number of' +
+                             'embedding neurons.')
     parser.add_argument('-drop', '--mlpDropout', required=False, type=float, default=0.0,
                         help='Dropout for MLP* models.')
     parser.add_argument('-epo', '--mlpEpochs', required=False, type=int, default=20,
                         help='Epochs for MLP* models.')
 
-    # MLPConv
-    parser.add_argument('-cneu', '--mlpConvNeurons', required=False, type=int, default=5,
-                        help='Number of neurons used for the convolution of the MLPConv model.')
+    # MLPEmb
+    parser.add_argument('-eneu', '--mlpEmbNeurons', required=False, type=int, default=3,
+                        help='Number of neurons used for the embedding of the MLPEmb model.')
 
     args = parser.parse_args()
 

@@ -64,7 +64,7 @@ def main():
     # Prepare model
     model = Model(model_type=args.model, task=args.task, input_dim=(len(data.frame.columns) - 1),
                   encodings=encodings, mlp_layers=args.mlpLayers, mlp_width=args.mlpWidth,
-                  mlp_dropout=args.mlpDropout, mlp_conv_neurons=args.mlpConvNeurons,
+                  mlp_dropout=args.mlpDropout, mlp_emb_neurons=args.mlpEmbNeurons,
                   svm_gamma=args.svmGamma, svm_c=args.svmC, logr_c=args.logrC)
 
     if args.plotData:

@@ -11,7 +11,7 @@ def main():
     # Determine columns.
     argument_columns = ['task', 'model', 'oneHotEncoding',
                         'mlpLayers', 'mlpWidth', 'mlpDropout', 'mlpEpochs',
-                        'mlpConvNeurons', 'logrC']
+                        'mlpEmbNeurons', 'logrC']
     result_columns = ['auc', 'f1', 'acc', 'set']
     test_results_columns = ['test_' + c for c in result_columns]
 

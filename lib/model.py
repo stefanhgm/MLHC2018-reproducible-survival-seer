@@ -11,16 +11,16 @@ from sklearn.svm import SVC, SVR
 class Model:
     """ Class that encapsulates the machine learning model and related functions. """
 
-    def __init__(self, model_type, task, input_dim, encodings, mlp_layers, mlp_width, mlp_dropout, mlp_conv_neurons,
+    def __init__(self, model_type, task, input_dim, encodings, mlp_layers, mlp_width, mlp_dropout, mlp_emb_neurons,
                  svm_gamma, svm_c, logr_c):
         self.model_type = model_type
         if model_type == 'MLP':
             self.model = mlp_model(input_dim=input_dim, width=mlp_width, depth=mlp_layers,
                                    dropout=mlp_dropout, binary=(task not in ['mort12', 'mort60']))
-        elif model_type == 'MLPConv':
-            self.model = mlp_conv_model(input_dim=input_dim, width=mlp_width, depth=mlp_layers,
-                                        dropout=mlp_dropout, binary=(task not in ['mort12', 'mort60']),
-                                        encodings=encodings, conv_neurons=mlp_conv_neurons)
+        elif model_type == 'MLPEmb':
+            self.model = mlp_emb_model(input_dim=input_dim, width=mlp_width, depth=mlp_layers,
+                                       dropout=mlp_dropout, binary=(task not in ['mort12', 'mort60']),
+                                       encodings=encodings, emb_neurons=mlp_emb_neurons)
         elif model_type == 'SVM':
             # Gamma parameter can also be a string
             if task in ['mort12', 'mort60']:
@@ -41,7 +41,7 @@ class Model:
             exit(-1)
 
     def plot_model(self, output_directory):
-        if self.model_type in ['MLP', 'MLPConv']:
+        if self.model_type in ['MLP', 'MLPEmb']:
             plot_model(self.model, to_file=output_directory + 'model.png')
 
 
@@ -72,21 +72,21 @@ def mlp_model(input_dim, width, depth, dropout, binary):
     return model
 
 
-def mlp_conv_model(input_dim, width, depth, dropout, binary, encodings, conv_neurons):
-    """ Function to create MLP model with convolutional layer for encoded inputs. """
+def mlp_emb_model(input_dim, width, depth, dropout, binary, encodings, emb_neurons):
+    """ Function to create MLP model with embedding layer for encoded inputs. """
 
     if input_dim != sum(encodings.values()):
         logging.error("Bad encoding: " + str(input_dim) + " vs. " + str(sum(encodings.values())))
         exit(1)
 
-    # Convolutional layer per encoding
-    convolutions = []
+    # Embedding layer per encoding
+    embeddings = []
     inputs = []
     for encoding in encodings.values():
         input_segment = Input(shape=(encoding, 1))
-        convolutions.append(Dropout(dropout)(Conv1D(conv_neurons, encoding)(input_segment)))
+        embeddings.append(Dropout(dropout)(Conv1D(emb_neurons, encoding)(input_segment)))
         inputs.append(input_segment)
-    tensors = Concatenate(axis=-1)(convolutions)
+    tensors = Concatenate(axis=-1)(embeddings)
     tensors = Flatten()(tensors)
 
     # Additional feedforward layers

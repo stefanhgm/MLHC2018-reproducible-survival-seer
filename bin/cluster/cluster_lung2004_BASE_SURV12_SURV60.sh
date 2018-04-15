@@ -48,7 +48,7 @@ TASK=(survival12 survival60)
 # ONE_HOT_ENCODING=(False True)
 ONE_HOT_ENCODING=(False True)
 
-# MODEL=(MLP MLPConv LogR NAIVE)
+# MODEL=(MLP MLPEmb LogR NAIVE)
 MODEL=(NAIVE)
 
 # MLP* parameters - 288 combinations
@@ -61,9 +61,9 @@ MLP_DROPOUT=(0.0)
 # MLP_EPOCHS=(20 50 100)
 MLP_EPOCHS=(20)
 
-# MLPConv parameters
-# MLP_CONV_NEURONS=(3 5 10)
-MLP_CONV_NEURONS=(3)
+# MLPEmb parameters
+# MLP_EMB_NEURONS=(3 5 10)
+MLP_EMB_NEURONS=(3)
 
 # LogR parameters
 # LOGR_C=(0.01 0.1 1.0 10.0 100.0 1000.0 10000.0 100000.0 1000000.0 10000000.0 100000000.0 1000000000.0 10000000000.0)
@@ -77,12 +77,12 @@ iml=$(($SLURM_ARRAY_TASK_ID / ${#TASK[@]} / ${#ONE_HOT_ENCODING[@]} / ${#MODEL[@
 imw=$(($SLURM_ARRAY_TASK_ID / ${#TASK[@]} / ${#ONE_HOT_ENCODING[@]} / ${#MODEL[@]} / ${#MLP_LAYERS[@]} % ${#MLP_WIDTH[@]}))
 imd=$(($SLURM_ARRAY_TASK_ID / ${#TASK[@]} / ${#ONE_HOT_ENCODING[@]} / ${#MODEL[@]} / ${#MLP_LAYERS[@]} / ${#MLP_WIDTH[@]} % ${#MLP_DROPOUT[@]}))
 ime=$(($SLURM_ARRAY_TASK_ID / ${#TASK[@]} / ${#ONE_HOT_ENCODING[@]} / ${#MODEL[@]} / ${#MLP_LAYERS[@]} / ${#MLP_WIDTH[@]} / ${#MLP_DROPOUT[@]} % ${#MLP_EPOCHS[@]}))
-icn=$(($SLURM_ARRAY_TASK_ID / ${#TASK[@]} / ${#ONE_HOT_ENCODING[@]} / ${#MODEL[@]} / ${#MLP_LAYERS[@]} / ${#MLP_WIDTH[@]} / ${#MLP_DROPOUT[@]} / ${#MLP_EPOCHS[@]} %  ${#MLP_CONV_NEURONS[@]}))
-ilc=$(($SLURM_ARRAY_TASK_ID / ${#TASK[@]} / ${#ONE_HOT_ENCODING[@]} / ${#MODEL[@]} / ${#MLP_LAYERS[@]} / ${#MLP_WIDTH[@]} / ${#MLP_DROPOUT[@]} / ${#MLP_EPOCHS[@]} /  ${#MLP_CONV_NEURONS[@]} % ${#LOGR_C[@]}))
+icn=$(($SLURM_ARRAY_TASK_ID / ${#TASK[@]} / ${#ONE_HOT_ENCODING[@]} / ${#MODEL[@]} / ${#MLP_LAYERS[@]} / ${#MLP_WIDTH[@]} / ${#MLP_DROPOUT[@]} / ${#MLP_EPOCHS[@]} %  ${#MLP_EMB_NEURONS[@]}))
+ilc=$(($SLURM_ARRAY_TASK_ID / ${#TASK[@]} / ${#ONE_HOT_ENCODING[@]} / ${#MODEL[@]} / ${#MLP_LAYERS[@]} / ${#MLP_WIDTH[@]} / ${#MLP_DROPOUT[@]} / ${#MLP_EPOCHS[@]} /  ${#MLP_EMB_NEURONS[@]} % ${#LOGR_C[@]}))
 
 # Transform boolean arguments
 if [ "${ONE_HOT_ENCODING[$ioh]}" == "False" ] ; then
     ENCODE_INPUTS_BOOL=" "
 fi
 
-python /home/user/Code/main.py --output ${OUTPUT} --incidences ${INCIDENCES} --specifications ${SPECIFICATIONS} --cases ${CASES} --task ${TASK[$ita]} ${ENCODE_INPUTS_BOOL:---oneHotEncoding} --model ${MODEL[$imo]} --mlpLayers ${MLP_LAYERS[$iml]} --mlpWidth ${MLP_WIDTH[$imw]} --mlpDropout ${MLP_DROPOUT[$imd]} --mlpEpochs ${MLP_EPOCHS[$ime]} --mlpConvNeurons ${MLP_CONV_NEURONS[$icn]} --logrC ${LOGR_C[$ilc]} --test --importance
+python /home/user/Code/main.py --output ${OUTPUT} --incidences ${INCIDENCES} --specifications ${SPECIFICATIONS} --cases ${CASES} --task ${TASK[$ita]} ${ENCODE_INPUTS_BOOL:---oneHotEncoding} --model ${MODEL[$imo]} --mlpLayers ${MLP_LAYERS[$iml]} --mlpWidth ${MLP_WIDTH[$imw]} --mlpDropout ${MLP_DROPOUT[$imd]} --mlpEpochs ${MLP_EPOCHS[$ime]} --mlpEmbNeurons ${MLP_EMB_NEURONS[$icn]} --logrC ${LOGR_C[$ilc]} --test --importance

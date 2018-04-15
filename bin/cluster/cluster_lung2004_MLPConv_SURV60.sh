@@ -16,7 +16,7 @@
 #SBATCH --time=24:00:00
 
 # set name of job
-#SBATCH --job-name=SEER-MLPConv-LUNG-2004
+#SBATCH --job-name=SEER-MLPEmb-LUNG-2004
 
 # mail alert at start, end and abortion of execution
 #SBATCH --mail-type=ALL
@@ -37,7 +37,7 @@ source /etc/profile.d/modules.sh; source /etc/profile.d/modules_local.sh
 source /home/user/VirtualEnv/bin/activate
 
 # constant arguments
-OUTPUT=/home/user/experiments/LUNG2004_MLPConv_SURV60
+OUTPUT=/home/user/experiments/LUNG2004_MLPEmb_SURV60
 INCIDENCES=/home/user/SEER-Dataset/RESPIR_MERGED_2004_2009.TXT
 SPECIFICATIONS=/home/user/SEER-Dataset/SEER_1973_2014_TEXTDATA/incidence/read.seer.research.nov16.sas
 CASES=/home/user/SEER-Dataset/SEERStat/Lung_2004_2009_229011.csv
@@ -48,8 +48,8 @@ TASK=(survival60)
 # ONE_HOT_ENCODING=(False True)
 ONE_HOT_ENCODING=(True)
 
-# MODEL=(MLP MLPConv LogR NAIVE)
-MODEL=(MLPConv)
+# MODEL=(MLP MLPEmb LogR NAIVE)
+MODEL=(MLPEmb)
 
 # MLP* parameters - 288 combinations
 MLP_LAYERS=(1 2 3 4)
@@ -57,9 +57,9 @@ MLP_WIDTH=(20 50 100 200)
 MLP_DROPOUT=(0.0 0.1 0.2 0.3 0.4 0.5)
 MLP_EPOCHS=(20 50 100)
 
-# MLPConv parameters
-# MLP_CONV_NEURONS=(3 5 10)
-MLP_CONV_NEURONS=(3 5 10)
+# MLPEmb parameters
+# MLP_EMB_NEURONS=(3 5 10)
+MLP_EMB_NEURONS=(3 5 10)
 
 # LogR parameters
 # LOGR_C=(0.01 0.1 1.0 10.0 100.0 1000.0 10000.0 100000.0 1000000.0 10000000.0 100000000.0 1000000000.0 10000000000.0)
@@ -73,12 +73,12 @@ iml=$(($SLURM_ARRAY_TASK_ID / ${#TASK[@]} / ${#ONE_HOT_ENCODING[@]} / ${#MODEL[@
 imw=$(($SLURM_ARRAY_TASK_ID / ${#TASK[@]} / ${#ONE_HOT_ENCODING[@]} / ${#MODEL[@]} / ${#MLP_LAYERS[@]} % ${#MLP_WIDTH[@]}))
 imd=$(($SLURM_ARRAY_TASK_ID / ${#TASK[@]} / ${#ONE_HOT_ENCODING[@]} / ${#MODEL[@]} / ${#MLP_LAYERS[@]} / ${#MLP_WIDTH[@]} % ${#MLP_DROPOUT[@]}))
 ime=$(($SLURM_ARRAY_TASK_ID / ${#TASK[@]} / ${#ONE_HOT_ENCODING[@]} / ${#MODEL[@]} / ${#MLP_LAYERS[@]} / ${#MLP_WIDTH[@]} / ${#MLP_DROPOUT[@]} % ${#MLP_EPOCHS[@]}))
-icn=$(($SLURM_ARRAY_TASK_ID / ${#TASK[@]} / ${#ONE_HOT_ENCODING[@]} / ${#MODEL[@]} / ${#MLP_LAYERS[@]} / ${#MLP_WIDTH[@]} / ${#MLP_DROPOUT[@]} / ${#MLP_EPOCHS[@]} %  ${#MLP_CONV_NEURONS[@]}))
-ilc=$(($SLURM_ARRAY_TASK_ID / ${#TASK[@]} / ${#ONE_HOT_ENCODING[@]} / ${#MODEL[@]} / ${#MLP_LAYERS[@]} / ${#MLP_WIDTH[@]} / ${#MLP_DROPOUT[@]} / ${#MLP_EPOCHS[@]} /  ${#MLP_CONV_NEURONS[@]} % ${#LOGR_C[@]}))
+icn=$(($SLURM_ARRAY_TASK_ID / ${#TASK[@]} / ${#ONE_HOT_ENCODING[@]} / ${#MODEL[@]} / ${#MLP_LAYERS[@]} / ${#MLP_WIDTH[@]} / ${#MLP_DROPOUT[@]} / ${#MLP_EPOCHS[@]} %  ${#MLP_EMB_NEURONS[@]}))
+ilc=$(($SLURM_ARRAY_TASK_ID / ${#TASK[@]} / ${#ONE_HOT_ENCODING[@]} / ${#MODEL[@]} / ${#MLP_LAYERS[@]} / ${#MLP_WIDTH[@]} / ${#MLP_DROPOUT[@]} / ${#MLP_EPOCHS[@]} /  ${#MLP_EMB_NEURONS[@]} % ${#LOGR_C[@]}))
 
 # Transform boolean arguments
 if [ "${ONE_HOT_ENCODING[$ioh]}" == "False" ] ; then
     ENCODE_INPUTS_BOOL=" "
 fi
 
-python /home/user/Code/main.py --output ${OUTPUT} --incidences ${INCIDENCES} --specifications ${SPECIFICATIONS} --cases ${CASES} --task ${TASK[$ita]} ${ENCODE_INPUTS_BOOL:---oneHotEncoding} --model ${MODEL[$imo]} --mlpLayers ${MLP_LAYERS[$iml]} --mlpWidth ${MLP_WIDTH[$imw]} --mlpDropout ${MLP_DROPOUT[$imd]} --mlpEpochs ${MLP_EPOCHS[$ime]} --mlpConvNeurons ${MLP_CONV_NEURONS[$icn]} --logrC ${LOGR_C[$ilc]} --test --importance
+python /home/user/Code/main.py --output ${OUTPUT} --incidences ${INCIDENCES} --specifications ${SPECIFICATIONS} --cases ${CASES} --task ${TASK[$ita]} ${ENCODE_INPUTS_BOOL:---oneHotEncoding} --model ${MODEL[$imo]} --mlpLayers ${MLP_LAYERS[$iml]} --mlpWidth ${MLP_WIDTH[$imw]} --mlpDropout ${MLP_DROPOUT[$imd]} --mlpEpochs ${MLP_EPOCHS[$ime]} --mlpEmbNeurons ${MLP_EMB_NEURONS[$icn]} --logrC ${LOGR_C[$ilc]} --test --importance

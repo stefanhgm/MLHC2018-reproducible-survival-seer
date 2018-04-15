@@ -22,7 +22,7 @@ $ python main.py -h
 An experiment with the randomly generated examples and an MLP model can be performed as shown below. This will produce a folder in the current directory containing results and a plot for the AUC score.
 
 ```
-$ python main.py --incidences example/INCIDENCES.txt --specifications example/read.seer.research.nov2016.sas --cases example/CASES.csv --task survival60 --oneHotEncoding --model MLP --mlpLayers 2 --mlpWidth 20 --mlpEpochs 1 --mlpDropout 0.1 --mlpConvNeurons 3 --test --importance --plotData --plotResults
+$ python main.py --incidences example/INCIDENCES.txt --specifications example/read.seer.research.nov2016.sas --cases example/CASES.csv --task survival60 --oneHotEncoding --model MLP --mlpLayers 2 --mlpWidth 20 --mlpEpochs 1 --mlpDropout 0.1 --importance --plotData --plotResults
 [...]
 Raw data: (10000; 133) cases and attributes
 Filtered SEER*Stat cases from ASCII: (5000; 133) cases and attributes

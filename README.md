@@ -5,8 +5,8 @@ Repository overview:
 - **/bin/cluster**: Slurm submission scripts for all parameter tuning experiments on the HPC cluster.
 - **/cohort**: SEER*Stat session files to reproduce cohort selections.
 - **/example**: Randomly generated SEER example to test the software without sensitive data.
-- **/example/CASES.csv**: Example case export. To reproduce experiments this should be generated for each cohort by loading the provided session files into SEER*Stat, executing the case listing, and exporting it via Matrix-Export-Results as Text File... with "CSV Defaults".
-- **/example/INCIDENCES.txt**: Example SEER incidences. To reproduce experiments this should be a file containing all incidences provided by SEER in ASCII format (e.g. by merging them together in a single file).
+- **/example/CASES.csv**: Example case export. To reproduce experiments, this should be generated for each cohort by loading the provided session files into SEER*Stat, executing the case listing, and exporting it via Matrix->Export->Results as Text File... with "CSV Defaults".
+- **/example/INCIDENCES.txt**: Example SEER incidences. To reproduce experiments, this should contain all incidences provided by SEER 1973-2014 data (November 2016 submission) in ASCII format (e.g. by merging them into a single file). The according ASCII data files are available from SEER on request.
 - **/lib**: Python classes and functions used for the experiments.
 - **main.py**: Main routine to perform the experiments.
 - **requirements.txt**: Python dependencies (can be installed with pip, e.g. in a virtual environment).
